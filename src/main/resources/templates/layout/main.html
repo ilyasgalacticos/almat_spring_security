@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        <link rel="stylesheet" type="text/css" th:href="@{'/css/bootstrap.min.css'}">
+    </head>
+    <body>
+        <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: rgba(12,18,120,0.83);">
+                <div class="container-fluid">
+                    <a class="navbar-brand" th:href="@{'/'}">E-SHOP</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0" sec:authorize="isAnonymous()">
+                            <li class="nav-item">
+                                <a class="nav-link" th:href="@{'/'}">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" th:href="@{'/loginpage'}">Login</a>
+                            </li>
+                        </ul>
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0" sec:authorize="isAuthenticated()">
+                            <li class="nav-item">
+                                <a class="nav-link" th:href="@{'/profile'}" th:text = "${CURRENT_USER.fullName}"></a>
+                            </li>
+                            <li class="nav-item" sec:authorize="hasAnyRole('ROLE_ADMIN')">
+                                <a class="nav-link" th:href="@{'/adminpanel'}">Admin Panel</a>
+                            </li>
+                            <li class="nav-item" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_MODERATOR')">
+                                <a class="nav-link" th:href="@{'/moderatorpanel'}">Moderator Panel</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="JavaScript:void(0)" onclick="logout()">Logout</a>
+                            </li>
+                            <script type="text/javascript">
+                                function logout(){
+                                    document.getElementById("logoutFormId").submit();
+                                }
+                            </script>
+                            <form th:action="@{'/tologout'}" method="post" id = "logoutFormId"></form>
+                        </ul>
+                        <form class="d-flex">
+                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                            <button class="btn btn-outline-light" type="submit">Search</button>
+                        </form>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <div class="container">
+            <div class="row mt-3">
+                <div class="col-12">
+                    <div layout:fragment="content">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript" th:src = "@{'/js/bootstrap.min.js'}">
+        </script>
+    </body>
+</html>

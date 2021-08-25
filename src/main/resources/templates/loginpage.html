@@ -1,0 +1,24 @@
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/main.html">
+
+    <div layout:fragment="content">
+        <div class="row">
+            <div class="col-6 mx-auto">
+                <form th:action="@{'/auth'}" method="post">
+                    <div class="mt-2">
+                        <label>EMAIL : </label>
+                        <input type="email" class="form-control mt-2" required placeholder="Insert email" name="user_email">
+                        <label>PASSWORD : </label>
+                        <input type="password" class="form-control mt-2" required placeholder="Insert password" name="user_password">
+                        <div class="mt-3">
+                            <button class="btn btn-success">SIGN IN</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</html>
