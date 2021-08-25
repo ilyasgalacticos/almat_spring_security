@@ -62,6 +62,7 @@ public class HomeController {
         Users currentUser = getUser();
         currentUser.setFullName(fullName);
         userService.updateUser(currentUser);
+        String someText = "Some Text";
         return "redirect:/profile";
     }
 
